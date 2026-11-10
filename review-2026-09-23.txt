@@ -1,0 +1,69 @@
+Review for "Twelve Quick Tips for Managing IT Disasters in Small Research
+Software Teams" by Greg Wilson.
+
+Thank you for the manuscript. Small research teams typically face various IT
+issues over time and being both aware and aware of and prepared for larger
+"disasters" is vital.  Therefore, I think this paper may serve as a valuable
+source for a particular readership.
+
+In its present form, the manuscript requires minor revisions of its contents
+before it can be considered for publication. Please find my comments and remarks
+below.
+
+General comments
+
+My main concern is the scope of the manuscript and the actionability of several
+tips for its stated audience. Many research software teams, especially those
+embedded within universities, may not have administrative control over IT
+infrastructure, including account management, backups, and more, simply because
+these responsibilities lie with institutional IT. In such settings, some of the
+suggested tips cannot be implemented directly by the research software team. I
+suspect that a substantial part of the journal's readership may be in a similar
+position.
+
+I suggest improving the separation between the actions that a research software
+team can take independently from actions that typically require institutional
+IT, and aspects that the team could verify or request when it lacks
+administrative authority. This may improve the actionability of the tips.
+
+Furthermore, the manuscript assumes that small research teams have the ability
+to carry out a substantial set IT-related tasks (named above) and even
+budgeting.  Completing such tasks alongside their respective primary research
+duties may represent a significant workload and may require additional
+expertise. Please consider identifying a minimal set of essential practices and
+indicating which tasks could typically be delegated to specialists.
+
+Tips 11 and 12 broaden the manuscript from technical disaster prep into
+leadership. I acknowledge the relevance, but this seems out of the initial
+scope.
+
+Specific comments
+
+- On the "Questions for Support" – what to do in case there is no such support
+  available on site?
+
+- Please consider adding web links into in the running text rather than having
+  both footnotes and numbered references – in case the journal allows this.
+
+- CRAN is a mirrored network, so there is no single failure point once a package
+  is published (see "Who You Are")
+
+- Data repositories do not primarily serve as platform for data backup, but for
+  data publishing, hence the DOI. Research software groups probably want to back
+  up raw data, and usually some form of curated data is published rather than
+  raw data (Tip 3).
+
+- The note field in Tip 3 seems redundant if the 3-2-1 rule is adhered to.
+
+- Tip 6 seems to be a rule to monitor tip 1. Please consider whether aligning
+  those would be sensible.
+
+- In case o boarding is suggested, I think mentioning onboarding is similarly
+  critical (Tip 7, box).
+
+- Please consider refining Tip 8. This rule is not actionable at all for readers
+  subordinate to local IT support.
+
+- If a research software team is small with few members and just produces
+  analysis code and some packages, the 12 tips seem disproportionate. Please
+  consider adding a small acknowledgement of this.
