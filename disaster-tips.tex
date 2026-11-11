@@ -61,13 +61,16 @@ We assume that your team fits one or more of these profiles:
   \end{itemize}
   
 \item[Publishing a software package]
-  Your group releases software to public registries like \withurl{PyPI}{https://pypi.org/} or
-  \withurl{CRAN}{https://cran.r-project.org/}. Scenarios include:
+  Your group releases software to public registries like \withurl{PyPI}{https://pypi.org/}
+  or \withurl{CRAN}{https://cran.r-project.org/}.  Scenarios include:
   \begin{itemize}
   \item Your PyPI token expires and the person who created it has left.
   \item GitHub suspends your account.
   \item Your institutional web hosting is turned off.
   \end{itemize}
+  Note that once a package is published, the registry copy itself is usually not
+  a single point of failure (CRAN, for example, has multiple mirrors).  The
+  risks are the accounts and credentials around the release.
   
 \item[Managing data]
   Your group produces datasets in the lab or in the field that are shared with
