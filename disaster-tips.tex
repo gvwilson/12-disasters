@@ -207,7 +207,9 @@ one-liner you will ever write, but automatic mirroring is even better.
 Back up your configuration as well, such as DNS records, environment variables,
 and pipeline definitions. These are small in size but catastrophic to
 reconstruct from memory. A single export once a week, stored alongside your
-other backups, is probably sufficient.
+other backups, is probably sufficient. Store backups under a separate account
+whose credentials are not kept on any production server, so a compromise of your
+main account does not also reach your backups.
 
 Finally, \emph{test a full restore from backup} at least once a year: according
 to one recent report, almost 20\% of backups fail to restore completely
@@ -215,12 +217,6 @@ to one recent report, almost 20\% of backups fail to restore completely
 in a real disaster, so check that your restore process is \emph{idempotent},
 i.e., that you can run it and then run it again.  A recovery that corrupts data
 the second time is as bad as no recovery at all.
-
-\begin{notebox}
-  If you can store backups on a separate cloud account with credentials that are
-  not stored on any production server, do so. If an attacker compromises your main
-  account, they should not get your backups as well.
-\end{notebox}
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
