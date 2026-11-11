@@ -26,7 +26,7 @@ can be, and that planning for disasters is one of the most effective ways to
 prevent them.
 
 This paper is a short guide to disaster planning and recovery for a small
-research software team.  [[The tips assume that you \emph{aren't} an experienced
+research software team.  The tips assume that you \emph{aren't} an experienced
 system administrator, but are willing to do some things on top of your regular
 job. Where expertise is required, most research institutions have research
 computing groups, data librarians, and environmental health-and-safety offices
@@ -34,14 +34,14 @@ whose entire job is to help with exactly these problems.  The ``Questions for
 Support'' boxes throughout tell you what to ask them for; this paper tells you
 what ``done'' looks like.  (If you don't have such a support team, start with
 the core described below and try out the free-tier tools named in the tips
-if and when you have time.)]]
+if and when you have time.)
 
-[[If you only adopt a handful of these tips, the essential core is: make a risk
+If you only adopt a handful of these tips, the essential core is: make a risk
 list and a written plan (Tips 1-2), follow the 3-2-1 backup rule (Tip 3), turn
 on multi-factor authentication with a shared password manager (Tip 7), choose
 one out-of-band way to stay in touch (Tip 4), and set up basic monitoring
 (Tip 6).  The rest can be delegated to the specialists named above or deferred
-until you need them.]]
+until you need them.
 
 \section*{Who You Are}
 
@@ -68,9 +68,9 @@ We assume that your team fits one or more of these profiles:
   \item GitHub suspends your account.
   \item Your institutional web hosting is turned off.
   \end{itemize}
-  [[Note that once a package is published, the registry copy itself is usually not
+  Note that once a package is published, the registry copy itself is usually not
   a single point of failure (CRAN, for example, has multiple mirrors).  The
-  risks are the accounts and credentials around the release.]]
+  risks are the accounts and credentials around the release.
   
 \item[Managing data]
   Your group produces datasets in the lab or in the field that are shared with
@@ -85,10 +85,10 @@ We assume that your team fits one or more of these profiles:
 
 These categories overlap: for example, an ecology lab may publish an R package,
 run a Shiny dashboard for collaborators, and curate a ten-year field dataset.
-[[At the other extreme, a team of one or two people who only write analysis code
+At the other extreme, a team of one or two people who only write analysis code
 and publish a package may find all twelve tips disproportionate; such teams
 should focus on the essential core named in the introduction and ignore, defer,
-or delegate the rest.]]
+or delegate the rest.
 
 \section*{Tip 1: Know your risks.}
 
@@ -186,14 +186,14 @@ For our ecology lab, the three copies might be:
   \withurl{Duplicati}{https://duplicati.com/} or your cloud provider's desktop
   sync app are sufficient.
 \item
-  [[An off-site copy. For raw data, keep a second backup in a different location
+  An off-site copy. For raw data, keep a second backup in a different location
   or cloud account, separate from your working copy and your automated backup.
   Publishing is a related but distinct step: deposit the \emph{curated} version
-  of a dataset in an institutional or domain repository]]
+  of a dataset in an institutional or domain repository
   (\withurl{Dataverse}{https://dataverse.org/},
   \withurl{Dryad}{https://datadryad.org/},
-  \withurl{Zenodo}{https://zenodo.org/}, or \withurl{OSF}{https://osf.io/}) [[to
-  get a citable DOI]]. For software, connect Zenodo or
+  \withurl{Zenodo}{https://zenodo.org/}, or \withurl{OSF}{https://osf.io/}) to
+  get a citable DOI. For software, connect Zenodo or
   \withurl{Figshare}{https://figshare.com/} to your repository so every tagged
   release is automatically archived. For lab notebooks, scan or photograph key
   pages quarterly and save them with your other backups.
@@ -207,9 +207,9 @@ one-liner you will ever write, but automatic mirroring is even better.
 Back up your configuration as well, such as DNS records, environment variables,
 and pipeline definitions. These are small in size but catastrophic to
 reconstruct from memory. A single export once a week, stored alongside your
-other backups, is probably sufficient. [[Store backups under a separate account
+other backups, is probably sufficient. Store backups under a separate account
 whose credentials are not kept on any production server, so a compromise of your
-main account does not also reach your backups.]]
+main account does not also reach your backups.
 
 Finally, \emph{test a full restore from backup} at least once a year: according
 to one recent report, almost 20\% of backups fail to restore completely
@@ -298,9 +298,9 @@ either fix the former or adjust the latter.
 
 \section*{Tip 6: Watch for trouble.}
 
-Monitor the things that would get you out of bed at 3:00 a.m.  [[Those are the
+Monitor the things that would get you out of bed at 3:00 a.m.  Those are the
 items on the risk list you made in Tip 1, especially the ones with the shortest
-RTO and RPO]]. For online services, free-tier monitoring like
+RTO and RPO. For online services, free-tier monitoring like
 \withurl{Uptime Robot}{https://uptimerobot.com/} and
 \withurl{Healthchecks.io}{https://healthchecks.io/} require no code and are
 infinitely better than nothing.
@@ -351,10 +351,10 @@ credentials should not be tied to a single phone number or email address.  For
 physical access, maintain a list of who has keys to the lab, who knows the alarm
 code, and who is authorized to move hardware.
 
-Finally, [[maintain an onboarding checklist alongside an offboarding one. When
+Finally, maintain an onboarding checklist alongside an offboarding one. When
 someone joins, grant their access, add them to the password manager and the
 contact tree, and have them read the plan and run the newest-member drill from
-Tip 5]]. When someone leaves, revoke their digital access and collect their
+Tip 5. When someone leaves, revoke their digital access and collect their
 physical keys as soon as you can. A disgruntled former team member with
 lingering access is trouble you don't need.
 
@@ -380,9 +380,9 @@ font, rewrite it until it does.
   office that offers free consultation.
 \end{notebox}
 
-[[If your institution's IT group owns your servers and laptops, several of the
+If your institution's IT group owns your servers and laptops, several of the
 steps below become things to verify with or request from them rather than do
-yourself; the ``Questions for Support'' box at the end lists the ones to raise.]]
+yourself; the ``Questions for Support'' box at the end lists the ones to raise.
 
 Keep laptops and servers patched: enable automatic updates for operating
 systems, browsers, and any server-side software. The inconvenience of an
@@ -469,8 +469,8 @@ database or \$200/year on a backup service.
 
 \section*{Tip 11: Support your team during the crisis.}
 
-[[The first ten tips are about systems and processes; these last two are about
-people, because a disaster is as much a human event as a technical one]].  Team
+The first ten tips are about systems and processes; these last two are about
+people, because a disaster is as much a human event as a technical one.  Team
 members may be scared, angry, or ashamed, particularly if they believe they
 caused the problem.  Handling the human damage is therefore just as important as
 handling the technical aspects.

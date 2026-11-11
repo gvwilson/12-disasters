@@ -1,0 +1,43 @@
+Response to reviewers
+
+- "My main concern is the scope of the manuscript and the actionability of
+  several tips for its stated audience." I have added clarifying notes in
+  several places to distinguish what small teams can reasonably be expected
+  to do from what they should ask IT to do (if available).
+
+- "Tips 11 and 12 broaden the manuscript from technical disaster prep into
+  leadership." I have rewritten the first paragraph of Tip 11 to make the
+  shift of focus explicit. (I believe very strongly that the human aspects
+  of disaster management are as important as the IT aspects, and so have
+  opted to retain these tips.)
+
+- "On the 'Questions for Support': what to do in case there is no such support
+  available on site?" Addressed with several comments.
+
+- "Please consider adding web links into in the running text rather than having
+  both footnotes and numbered references in case the journal allows this." I am
+  using PLOs's own style file here.
+
+- "CRAN is a mirrored network, so there is no single failure point once a
+  package is published." Noted, and comment added.
+
+- "Data repositories do not primarily serve as platform for data backup, but for
+  data publishing, hence the DOI." Thank you for pointing this out - I've added
+  a clarifying note.
+
+- "The note field in Tip 3 seems redundant if the 3-2-1 rule is adhered to."
+  Agreed and addressed.
+
+- "Tip 6 seems to be a rule to monitor tip 1." I've added a backward reference
+  from the former to the latter.
+
+- "In case offboarding is suggested, I think mentioning onboarding is similarly
+  critical." Agreed - I've added a couple of sentences.
+
+- "Please consider refining Tip 8. This rule is not actionable at all for
+  readers subordinate to local IT support." Clarifying note added.
+
+- "If a research software team is small with few members and just produces
+  analysis code and some packages, the 12 tips seem disproportionate. Please
+  consider adding a small acknowledgement of this." With respect, I disagree
+  with the reviewer on this point.
