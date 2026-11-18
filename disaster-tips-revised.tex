@@ -17,31 +17,29 @@
   * Corresponding author, gvwilson@third-bit.com.
 \end{flushleft}
 
-In 2025, the US government launched an unprecedented series of attacks on its
-own scientific research groups.  A year later \withurl{GitHub}{https://github.com/}
+In 2025, the US government initiated an unprecedented series of cuts to its own
+scientific research groups.  A year later \withurl{GitHub}{https://github.com/}
 dropped below 90\% availability for the first time, while wildfires in Canada,
 France, Spain, and elsewhere forced researchers from the homes and labs.  These
 events and others have reminded us just how fragile research computing systems
 can be, and that planning for disasters is one of the most effective ways to
-prevent them.
+mitigate their impacts.
 
 This paper is a short guide to disaster planning and recovery for a small
-research software team.  The tips assume that you \emph{aren't} an experienced
-system administrator, but are willing to do some things on top of your regular
-job. Where expertise is required, most research institutions have research
-computing groups, data librarians, and environmental health-and-safety offices
-whose entire job is to help with exactly these problems.  The ``Questions for
-Support'' boxes throughout tell you what to ask them for; this paper tells you
-what ``done'' looks like.  (If you don't have such a support team, start with
-the core described below and try out the free-tier tools named in the tips
-if and when you have time.)
+research software team.  It assumes that you \emph{aren't} an experienced system
+administrator, and anything you do to prepare for the worst is extra work on top
+of ``normal'' work.  Note that most research institutions have research
+computing groups, data librarians, and other specialists who can help with
+exactly these problems. (In some places this support comes from national
+infrastructure instead.)  The ``Questions for Support'' boxes throughout tell
+you what to ask them for.
 
-If you only adopt a handful of these tips, the essential core is: make a risk
-list and a written plan (Tips 1-2), follow the 3-2-1 backup rule (Tip 3), turn
-on multi-factor authentication with a shared password manager (Tip 7), choose
-one out-of-band way to stay in touch (Tip 4), and set up basic monitoring
-(Tip 6).  The rest can be delegated to the specialists named above or deferred
-until you need them.
+\begin{notebox}[Priorities]
+  If you are only able adopt a handful of these tips, please make a risk list
+  and a written plan (Tips 1-2), follow the 3-2-1 backup rule (Tip 3), choose
+  one out-of-band way to stay in touch (Tip 4), and turn on multi-factor
+  authentication with a shared password manager (Tip 7).
+\end{notebox}
 
 \section*{Who You Are}
 
@@ -50,8 +48,8 @@ We assume that your team fits one or more of these profiles:
 \begin{description}
   
 \item[Providing a simple online service]
-  Your research group runs a \withurl{Shiny}{https://shiny.posit.co/} app
-  or a \withurl{Streamlit}{https://streamlit.io/} dashboard so that collaborators can query data.
+  Your research group runs an interactive web site or web-based application
+  so that collaborators can query data.
   Disasters scenarios include:
   \begin{itemize}
   \item Your cloud provider suspends your account.
@@ -61,9 +59,13 @@ We assume that your team fits one or more of these profiles:
   \end{itemize}
   
 \item[Publishing a software package]
-  Your group releases software to public registries like \withurl{PyPI}{https://pypi.org/}
-  or \withurl{CRAN}{https://cran.r-project.org/}.  Scenarios include:
+  Your group releases software to a public registry like
+  \withurl{PyPI}{https://pypi.org/} or \withurl{CRAN}{https://cran.r-project.org/},
+  to \withurl{GitHub}{https://github.com/}, or to an institutional download site.
+  Scenarios include:
   \begin{itemize}
+  \item A released package stops working after an operating system update, and
+    the person who wrote it has left.
   \item Your PyPI token expires and the person who created it has left.
   \item GitHub suspends your account.
   \item Your institutional web hosting is turned off.
@@ -73,8 +75,8 @@ We assume that your team fits one or more of these profiles:
   risks are the accounts and credentials around the release.
   
 \item[Managing data]
-  Your group produces datasets in the lab or in the field that are shared with
-  collaborators and deposited in repositories.  Scenarios include:
+  Your group produces datasets in the lab or in the field, whether or not they
+  are shared with collaborators or deposited in repositories.  Scenarios include:
   \begin{itemize}
   \item A lab server's hard drive fails.
   \item A field laptop is stolen and the data on it has not been backed up.
@@ -83,27 +85,27 @@ We assume that your team fits one or more of these profiles:
   
 \end{description}
 
-These categories overlap: for example, an ecology lab may publish an R package,
-run a Shiny dashboard for collaborators, and curate a ten-year field dataset.
-At the other extreme, a team of one or two people who only write analysis code
-and publish a package may find all twelve tips disproportionate; such teams
-should focus on the essential core named in the introduction and ignore, defer,
-or delegate the rest.
+These categories overlap: an ecology lab may publish an R package, run a Shiny
+dashboard for collaborators, and curate a ten-year field dataset.  At the other
+extreme, a team of one or two people who only write analysis code and publish a
+package may find all twelve tips disproportionate; such teams should focus on
+the essential core named in the introduction and ignore, defer, or delegate the
+rest.
 
 \section*{Tip 1: Know your risks.}
 
 Start by making a point-form list of the services, data sets, and physical
-assets your team depends on.  For a small team, this will take about an hour the
-first time through, and 15-30 minutes per quarter for review.  For our ecology
-lab, this includes where the R package is published, where the Shiny dashboard
-is hosted, where the ten-year field dataset lives, and the laptops the team
-works on. For each item, answer two questions:
+assets your team depends on.  For a simple service, this will take about an hour
+the first time through, and 15-30 minutes per quarter for review.  Using an
+ecology lab as an example once again, this list includes where the R package is
+published, where the Shiny dashboard is hosted, where the ten-year field dataset
+lives, and the laptops the team works on. For each item, answer two questions:
 
 \begin{enumerate}
   
 \item
-  How long can you be without it before work stops dead? This is your
-  \emph{Recovery Time Objective} (RTO).
+  How long can you tolerate being without it before your work is seriously
+  disrupted? This is your \emph{Recovery Time Objective} (RTO).
   
 \item
   How much data can you afford to lose: the last hour's work, the last
@@ -116,11 +118,13 @@ tool for creating this, but as discussed below, make sure you keep a copy
 somewhere you can access when online services are down.  Once you have this
 list, identify the single points of failure within your control, such as the
 person who knows the deployment process or the credit card that pays for cloud
-services. For each, ask what happens if it disappears.
+services. For each, ask what happens if it disappears. This is an ongoing
+assessment, not a one-off: review the list quarterly and whenever your tools,
+data, or people change.
 
 \begin{notebox}[Questions for Support]
-  If you have access to research support teams of the kind described in the introduction,
-  you may want to ask them these questions.
+  If you have access to IT support teams of the kind described in the introduction,
+  ask them:
   \begin{itemize}
   \item Can you help us estimate realistic recovery time and recovery point targets?
   \item Who else shares the systems we depend on, and how would their failure cascade to us?
@@ -130,11 +134,11 @@ services. For each, ask what happens if it disappears.
 \section*{Tip 2: Make a plan.}
 
 Once you understand your risks, write a plan in a single shared document that
-everyone on the team can find in thirty seconds or less. Store the plan in at
-least two places that cannot fail simultaneously, such as the shared team drive
-\emph{plus} a printed copy in a desk drawer or a PDF saved on every team
-member's phone. Pin the link in your team chat, and if you have a physical
-office, tape a printed copy to the fridge.
+everyone on the team can find quickly. Store the plan in at least two places
+that cannot fail simultaneously, such as the shared team drive \emph{plus} a
+printed copy in a desk drawer at home or a PDF saved on every team member's
+phone. Pin the link in your team chat, and if you have a physical office, tape a
+printed copy to the fridge.
 
 State the disaster declaration criteria in plain language, such as ``our
 dashboard has been offline for more than a day'' or ``we have found a virus on a
@@ -142,12 +146,16 @@ server''.  Every team member is part of the recovery team, so make sure everyone
 has read the plan, understands the criteria, and knows their first action if a
 disaster is declared.
 
-Your plan should include a short checklist for each scenario, written as a
-numbered series of specific actions. For example, for an online service outage:
+Your plan should include contact information for the people who manage key
+accounts and infrastructure.  It should include a short checklist for each
+scenario, written as a numbered series of specific actions. For example, for an
+online service outage:
 
 \begin{enumerate}
-\item Send a message to the \withurl{Signal}{https://signal.org/} group.
-\item Log into the database management console and click ``Restore from snapshot''.
+\item Send a message to your out-of-band channel (for example, a
+  \withurl{Signal}{https://signal.org/} group).
+\item Log into the database management console and click ``Restore from
+  snapshot''.
 \item Check that the dashboard loads and returns data correctly.
 \end{enumerate}
 
@@ -162,9 +170,12 @@ numbered series of specific actions. For example, for an online service outage:
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
-  \item Will you review our plan and checklists and flag any steps that are wrong or missing?
-  \item Where should we keep a copy so your staff can also find it during an incident?
-  \item Who is our first point of contact on your team when we declare a disaster?
+  \item Will you review our plan and checklists and flag any steps that are
+    wrong or missing?
+  \item Where should we keep a copy so your staff can also find it during an
+    incident?
+  \item What is the way to reach your team when we declare a disaster, including
+    when internal IT is down or we are locked out?
   \end{itemize}
 \end{notebox}
 
@@ -172,19 +183,20 @@ numbered series of specific actions. For example, for an online service outage:
 
 Follow the \emph{3-2-1 rule} \cite{krogh2009}: three copies of every critical
 asset, on two different types of media, with one copy off-site. This applies to
-data, software releases, electronic lab notebooks, and configuration information.
-For our ecology lab, the three copies might be:
+data, software releases, electronic lab notebooks, and configuration
+information.  For an ecology lab, the three copies might be:
 
 \begin{enumerate}
 \item
   The working copy on a lab server or shared drive.
 \item
   An automated backup. If your institution offers a research computing backup
-  service, use it. If not, use a managed database (e.g., \withurl{Amazon RDS}{https://aws.amazon.com/rds/}
-  or \withurl{Google Cloud SQL}{https://cloud.google.com/sql}) with automatic
-  daily snapshots (no scripting required). For files, GUI tools like
-  \withurl{Duplicati}{https://duplicati.com/} or your cloud provider's desktop
-  sync app are sufficient.
+  service, use it. If not, use a managed database (e.g., \withurl{Amazon
+    RDS}{https://aws.amazon.com/rds/} or \withurl{Google Cloud
+    SQL}{https://cloud.google.com/sql}) with automatic daily snapshots, or take
+  local snapshots on a database system or a NAS server whose filesystem supports
+  them. For files, GUI tools like \withurl{Duplicati}{https://duplicati.com/} or
+  your cloud provider's desktop sync app are sufficient.
 \item
   An off-site copy. For raw data, keep a second backup in a different location
   or cloud account, separate from your working copy and your automated backup.
@@ -195,34 +207,44 @@ For our ecology lab, the three copies might be:
   \withurl{Zenodo}{https://zenodo.org/}, or \withurl{OSF}{https://osf.io/}) to
   get a citable DOI. For software, connect Zenodo or
   \withurl{Figshare}{https://figshare.com/} to your repository so every tagged
-  release is automatically archived. For lab notebooks, scan or photograph key
-  pages quarterly and save them with your other backups.
+  release is automatically archived.
 \end{enumerate}
 
-Back up your source code to at least two different software forges (e.g.,
-\withurl{GitLab}{https://gitlab.com/} as well as GitHub) and turn on automatic
-mirroring. A \texttt{git push} to a secondary remote is the most cost-effective
-one-liner you will ever write, but automatic mirroring is even better.
+For lab notebooks, scan or photograph key pages quarterly and save them with
+your other backups.
 
-Back up your configuration as well, such as DNS records, environment variables,
-and pipeline definitions. These are small in size but catastrophic to
+Back up your source code to at least two different software forges (e.g.,
+\withurl{GitLab}{https://gitlab.com/} or
+\withurl{Codeberg}{https://codeberg.org/} as well as GitHub) and turn on
+automatic mirroring. A \texttt{git push} to the second forge is the most
+cost-effective one-liner you will ever write, but automatic mirroring is even
+better.
+
+Back up your configuration as well, such as environment variables, server
+configuration, and pipeline definitions. These are small, but difficult to
 reconstruct from memory. A single export once a week, stored alongside your
 other backups, is probably sufficient. Store backups under a separate account
 whose credentials are not kept on any production server, so a compromise of your
 main account does not also reach your backups.
 
+Describe your computational pipelines in a workflow description language (for
+example, \withurl{Nextflow}{https://www.nextflow.io/}) and register them with
+\withurl{Dockstore}{https://dockstore.org/} or a similar registry. A declarative
+pipeline that is registered is one you can actually run again when you need it.
+
 Finally, \emph{test a full restore from backup} at least once a year: according
 to one recent report, almost 20\% of backups fail to restore completely
 \cite{backblaze2024}.  And remember that you may need to restore several times
 in a real disaster, so check that your restore process is \emph{idempotent},
-i.e., that you can run it and then run it again.  A recovery that corrupts data
-the second time is as bad as no recovery at all.
+i.e., that you can run multiple times with the same result.  A recovery that
+corrupts data the second time is as bad as no recovery at all.
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
   \item What backup and off-site repository services do you provide?
   \item Can you test our restore process?
-  \item Who manages our off-site deposits, and how do we reach them when we need a restore?
+  \item Who manages our off-site deposits, and how do we reach them when we need
+    a restore?
   \end{itemize}
 \end{notebox}
 
@@ -230,16 +252,18 @@ the second time is as bad as no recovery at all.
 
 Choose a single communication channel that does not depend on your normal
 infrastructure. For example, if you use \withurl{Slack}{https://slack.com/},
-agree \emph{in advance} on a Signal group or a phone tree for when Slack is
-unavailable.  Make sure the fallback is written in your plan.
+agree \emph{in advance} on an out-of-band channel such as a Signal group or a
+phone tree for when Slack is unavailable.  Make sure the fallback is written in
+your plan.
 
-For lab and field staff, maintain a printed contact tree: if the server fails at
-2:00 a.m., who calls whom? Post it on the lab fridge and save a photo on every
-team member's phone.
+For lab and field staff, maintain a printed contact tree: who calls whom if the
+server fails outside working hours? Post it on the lab fridge and save a photo
+on every team member's phone.
 
-Keep a printed (or phone-screenshot) contact list with every team member's
-mobile number and a personal email address. Do not store this only in a shared
-drive that may be affected by an outage.
+Keep a printed (or phone-screenshot) contact list, but respect privacy: list
+only the few key people who must be reachable, and include a phone-less fallback
+such as a personal email address. Do not store the list only in a shared drive
+that may be affected by an outage.
 
 Pre-write messages and store them with the plan and in your password manager's
 shared vault:
@@ -267,7 +291,8 @@ and 3:00 pm) even if the update is ``still working on it''.
 \begin{notebox}[Questions for Support]
   \begin{itemize}
   \item How can we reach your team during an outage?
-  \item Is there an institutional status page or mailing list our updates should be mirrored to?
+  \item Is there an institutional status page or mailing list our updates should
+    be mirrored to?
   \item Who on your team needs to receive our incident messages?
   \end{itemize}
 \end{notebox}
@@ -275,15 +300,14 @@ and 3:00 pm) even if the update is ``still working on it''.
 \section*{Tip 5: Test the plan.}
 
 The most revealing test for a small team is to hand the recovery checklist to
-the newest team member, give them a test copy that they can break without
-consequences, and ask them to execute the plan without help. Every point where
-they get stuck is a documentation or automation gap.
+the newest team member, have someone else break a test copy of the service, and
+ask the newest member to execute the plan without help. Every point where they
+get stuck is a documentation or automation gap.
 
 If no one has joined your team recently, gather everyone for an hour-long
-walkthrough. Pick the thing that scares you most as ``It's Tuesday morning and
-all of Monday's data has disappeared from the database.'' Walk through the
-checklist step by step and fix anything that is missing, wrong, or stale then
-and there.
+walkthrough. Pick the thing that scares you most, e.g., ``It's Tuesday morning
+and all of Monday's data has disappeared from the database.'' Walk through the
+checklist step by step and fix anything that is missing, wrong, or stale.
 
 Keep track of how long these tests take and compare against your RTO. If
 restoring the database takes four hours but your RTO is two hours, you must
@@ -292,23 +316,32 @@ either fix the former or adjust the latter.
 \begin{notebox}[Questions for Support]
   \begin{itemize}
   \item Can your staff join our next drill so we can find gaps together?
-  \item Can you provide a sandbox where we can practice for disasters without affecting production?
+  \item Can you provide a sandbox where we can practice for disasters without
+    affecting production?
   \end{itemize}
 \end{notebox}
 
 \section*{Tip 6: Watch for trouble.}
 
-Monitor the things that would get you out of bed at 3:00 a.m.  Those are the
-items on the risk list you made in Tip 1, especially the ones with the shortest
-RTO and RPO. For online services, free-tier monitoring like
-\withurl{Uptime Robot}{https://uptimerobot.com/} and
+Monitor the things that matter most when they break.  (These are the items on
+the risk list you made in Tip 1, especially the ones with the shortest RTO and
+RPO.) For online services, monitor up status, load, and response time so that a
+misbehaving bot or a denial-of-service attack shows up early. Free-tier
+monitoring like \withurl{Uptime Robot}{https://uptimerobot.com/} and
 \withurl{Healthchecks.io}{https://healthchecks.io/} require no code and are
 infinitely better than nothing.
+
+\begin{notebox}
+  Note that uptime monitoring will not catch an active intrusion, i.e., a hacker
+  breaking into your system. However, such a break-in is often accompanied by a
+  flood of traffic to a previously-unknown external site.
+\end{notebox}
 
 Check that your dataset's DOI still resolves and that your package is still
 installable from its registry. If your software has a ``downloads per month''
 badge, a sudden drop to zero may be the first sign that your registry listing is
-broken.
+broken because a token expired, an account was suspended, or the package was
+removed or deprecated.
 
 Check your cloud bill at least once a month: a misconfigured resource can
 generate a catastrophic bill even for a small team. Set budget alerts in your
@@ -332,17 +365,22 @@ app or passkey is better than SMS-based MFA, though SMS is better than no MFA at
 all.
 
 Use a password manager like \withurl{1Password}{https://1password.com/} or
-\withurl{Bitwarden}{https://bitwarden.com/} for the whole team so that you can
-share credentials securely.  Every shared credential goes in the password
-manager: never send credentials over chat or email. Print the password manager's
-recovery code and store several copies somewhere physically safe: if you lose
-access to the password manager, you lose access to everything.
+\withurl{Bitwarden}{https://bitwarden.com/} for the whole team. A shared vault
+synchronizes entries across everyone's devices, so a credential is available
+wherever it is needed. Sharing does widen exposure, so share only what a role
+requires and revoke access when someone leaves. Every shared credential goes in
+the password manager: never send credentials over chat or email. Print the
+password manager's recovery code and store several copies somewhere physically
+safe: if you lose access to the password manager, you lose access to everything.
 
-If you have a custom domain, know who manages it: institutional IT, a commercial
-registrar, or someone on the team. Make sure that person's contact information
-is in the disaster plan, that auto-renewal is enabled, and that at least two
-people can access the account. Set a quarterly calendar reminder to verify that
-auto-renewal is still working.
+If you have a custom web domain, know who manages it: institutional IT, a
+commercial registrar, or someone on the team. Make sure auto-renewal is enabled
+and that at least two people can access the account. Set a quarterly calendar
+reminder to verify that auto-renewal is still working.
+
+MFA and password managers centralize your points of failure; used without backup
+access they can lock you out of everything at once. Pair them with the recovery
+paths above rather than treating them as a silver bullet.
 
 Make sure at least two people have critical administrative credentials, such as
 the cloud root account, the domain registrar login, the payment method for
@@ -362,48 +400,63 @@ lingering access is trouble you don't need.
   \begin{itemize}
   \item Can you help us set up multi-factor authentication?
   \item Which of your team should have access to administrative credentials?
-  \item How quickly does your offboarding process revoke access when someone leaves?
+  \item How quickly does your offboarding process revoke access when someone
+    leaves?
   \end{itemize}
 \end{notebox}
 
 \section*{Tip 8: Protect your assets.}
 
-Make a simple, explicit policy about where things live, such as, ``patient data
-is never copied to a personal laptop'' or ``database dumps are encrypted at
-rest''.  If your policy will not fit comfortably on a single page in an 11-point
-font, rewrite it until it does.
-
 \begin{notebox}
-  You may have obligations you are not aware of under HIPAA, GDPR, or your
-  funder's data-management plan.  If you are handling sensitive data, you should
-  therefore check whether your institution has an ethics board or data-protection
-  office that offers free consultation.
+  If your institution's IT group owns your servers and laptops, several of the
+  steps below become things to verify with or request from them rather than do
+  yourself.  In particular, you may have obligations you are not aware of under
+  HIPAA, GDPR, or your funder's data-management plan.  If you are handling
+  sensitive data, check whether your institution has an ethics board or
+  data-protection office that offers free consultation.
 \end{notebox}
 
-If your institution's IT group owns your servers and laptops, several of the
-steps below become things to verify with or request from them rather than do
-yourself; the ``Questions for Support'' box at the end lists the ones to raise.
+Write a simple, explicit policy about where things live, such as, ``patient data
+is never copied to a personal laptop'' or ``database dumps are encrypted at
+rest''. Rules like the first cannot be left to good intentions alone: enforce
+them technically, for example with a trusted research environment for protected
+data.  Keep the policy short enough that people will actually read and remember
+it.
 
-Keep laptops and servers patched: enable automatic updates for operating
-systems, browsers, and any server-side software. The inconvenience of an
-unexpected reboot is less than the inconvenience of ransomware.
+Keep laptops and servers patched: apply security updates promptly, and enable
+automatic updates for operating systems, browsers, and server-side software
+where you can review and roll them back. The inconvenience of an unexpected
+reboot is less than the inconvenience of ransomware.
 
 For on-premises equipment like a lab server, consider buying a cheap
 uninterruptible power supply (UPS) and configure it to trigger a clean shutdown
 when the battery reaches 20\%.  Replace the UPS battery every three years: they
 have a tendency to degrade silently.
 
+Think about physical security too: if a critical server sits in a space many
+people can enter, lock it away or restrict access to the room.
+
 Prepare a short, written response for ransomware and similar breaches. If
 someone on the team is contacted by villains, their first action should be to
-physically disconnect the affected machine from the network and then call the
-designated incident lead. Do not try to negotiate or pay without consulting
-legal counsel: most jurisdictions have regulations about ransomware payments.
+disconnect the affected machine from the network---physically, if it is in front
+of you, or via its cloud console or security group, or by asking IT if it is
+racked---and then call the designated incident lead. Do not try to negotiate or
+pay without consulting legal counsel: most jurisdictions have regulations about
+ransomware payments.
+
+AI agents are the newest source of trouble. If your lab uses coding or analysis
+agents that can read files, edit code, or run commands, treat them as you would
+a new, overconfident team member: give them least-privilege access, log what
+they do, and keep sensitive data and credentials out of the directories they can
+reach. A poorly prompted agent can exfiltrate data, disclose confidential
+information, or damage local files by accident.
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
   \item Who should we talk to about data protection?
   \item Can you confirm our laptops and servers have automatic patching enabled?
-  \item If we face ransomware, who is our incident lead and which legal counsel do we call?
+  \item If we face ransomware, who is our incident lead and which legal counsel
+    do we call?
   \end{itemize}
 \end{notebox}
 
@@ -453,7 +506,7 @@ subscription, domain and certificate renewals, managed-database fees, and
 repository deposit charges.  More important, but harder to track, are the
 personnel costs: time spent on quarterly plan reviews, annual backup-restore
 tests and disaster drills, cross-training to reduce lottery factors, and the
-hours lost to incident response instead of research.
+hours lost to incident response.
 
 Calculate what a day of downtime costs you, including things like lost
 experiment time, missed paper deadlines, or collaborators who stop trusting
@@ -462,8 +515,10 @@ database or \$200/year on a backup service.
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
-  \item Can you tell us what backup storage, a managed database, and monitoring ought to cost?
-  \item Which of those can the institution cover, and which do we have to fund ourselves?
+  \item Can you tell us what backup storage, a managed database, and monitoring
+    ought to cost?
+  \item Which of those can the institution cover, and which do we have to fund
+    ourselves?
   \end{itemize}
 \end{notebox}
 
@@ -522,16 +577,17 @@ not also be the person writing the post-mortem the next morning.
   \begin{itemize}
   \item What wellbeing or crisis support do you offer, and how do we access it?
   \item Are there any provisions for post-incident leave?
-  \item How should crisis preparation and response be factored into annual performance reviews?
+  \item How should crisis preparation and response be factored into annual
+    performance reviews?
   \end{itemize}
 \end{notebox}
 
 \section*{Tip 12: Help your team recover after the disaster.}
 
-In Tip 9 said to hold the review within 48 hours. That is for gathering facts
+Tip 9 said to hold a short review within 48 hours. That is for gathering facts
 while memory is fresh; a second, more reflective conversation a week or two
 later gives people time to process what happened emotionally.  The goal of this
-second conversation is not to find root causes but to ask: ``How are we doing?''
+second conversation is to ask, ``How are we doing?''
 
 If someone on the team caused the disaster, handle it carefully, and make sure
 the rest of the team acts that way.  Ask them privately if they are OK.  If you
@@ -556,13 +612,88 @@ time something goes wrong.
 
 \begin{notebox}[Questions for Support]
   \begin{itemize}
-  \item What longer-term counselling or support can you offer staff in the weeks after the incident?
-  \item Who else in the institution should we inform so they can support our recovery?
-  \item Can you help us capture lessons learned so other teams benefit from what happened?
+  \item What longer-term counselling or support can you offer staff in the weeks
+    after the incident?
+  \item Who else in the institution should we inform so they can support our
+    recovery?
+  \item Can you help us capture lessons learned so other teams benefit from what
+    happened?
   \end{itemize}
 \end{notebox}
 
-\nocite{*}
-\bibliography{disaster-tips}
+\begin{thebibliography}{10}
+
+\bibitem{krogh2009}
+Krogh P.
+\newblock The DAM Book.
+\newblock O'Reilly; 2009.
+\newblock The source of the ``3-2-1 rule'' for backups.
+
+\bibitem{backblaze2024}
+Backblaze. 2024 State of the Backup: Survey Says Security Incidents and Data
+  Loss on the Rise; 2024.
+\newblock Reports that approximately 20\% of backups fail to restore
+  completely.
+\newblock Available from:
+  \url{https://www.backblaze.com/blog/2024-state-of-the-backup-security-incidents-and-data-loss-on-the-rise/}.
+
+\bibitem{smalls2021}
+Smalls D, Wilson G.
+\newblock Ten quick tips for staying safe online.
+\newblock {PLOS} Computational Biology. 2021 3;17(3):e1008563.
+\newblock Available from: \url{https://doi.org/10.1371/journal.pcbi.1008563}.
+  \href {http://dx.doi.org/10.1371/journal.pcbi.1008563}
+  {doi:10.1371/journal.pcbi.1008563}.
+
+\bibitem{who2026}
+Organization WH. Psychological first aid: Facilitator's manual for orienting
+  field workers; 2013.
+\newblock How to manage a team's mental health during a crisis.
+\newblock Available from:
+  \url{https://www.who.int/publications/i/item/psychological-first-aid}.
+
+\bibitem{acsc2023}
+{Australian Cyber Security Centre}. Essential Eight Maturity Model; 2023.
+\newblock Pragmatic security controls that don't require an enterprise budget.
+\newblock Available from:
+  \url{https://www.cyber.gov.au/business-government/asds-cyber-security-frameworks/essential-eight/essential-eight-maturity-model}.
+
+\bibitem{beyer2016}
+Beyer B, Jones C, Petoff J, Murphy NR.
+\newblock Site Reliability Engineering.
+\newblock O'Reilly; 2016.
+\newblock Chapters 6 (monitoring), 8 (release engineering), and 15 (postmortem
+  culture) are most applicable to small teams.
+
+\bibitem{cisa2023}
+{Cybersecurity and Infrastructure Security Agency}. {\#StopRansomware} Guide;
+  2023.
+\newblock Practical ransomware guidance applicable at any scale.
+\newblock Available from:
+  \url{https://www.cisa.gov/stopransomware/ransomware-guide}.
+
+\bibitem{nist2010}
+{National Institute of Standards and Technology}.
+\newblock Contingency Planning Guide for Federal Information Systems.
+\newblock National Institute of Standards and Technology; 2010. 800-34 Rev. 1.
+\newblock Enterprise-scale, but the BIA and RTO/RPO concepts scale down.
+\newblock Available from:
+  \url{https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final}.
+
+\bibitem{shortridge2023}
+Shortridge K.
+\newblock Security Chaos Engineering.
+\newblock O'Reilly; 2023.
+\newblock Probably more than you need, but you won't know 'til you read it.
+\newblock Available from: \url{https://www.securitychaoseng.com/}.
+
+\bibitem{tamburri2020}
+Tamburri DA, Blincoe K, Palomba F, Kazman R.
+\newblock ``The Canary in the Coal Mine…'' A cautionary tale from the decline
+  of SourceForge.
+\newblock Software: Practice and Experience. 2020 7;50(10):1930-51.
+\newblock \href {http://dx.doi.org/10.1002/spe.2874} {doi:10.1002/spe.2874}.
+
+\end{thebibliography}
 
 \end{document}
