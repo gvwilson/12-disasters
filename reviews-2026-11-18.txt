@@ -1,0 +1,214 @@
+Reviewer #2: I like the intent and tone of the piece. It is to the point and the advice is solid. However, it feels to me as if it is targeted at a large research software development group rather than a typical computational lab. A typical lab might have one real software engineer who handles dev ops, and a myriad of students who come and go. In this environment, the most important advice is to have a strict system for the students to keep track of their work, document where their assets are, and have a plan to hand over their responsibilities when they leave. I saw little that such a lab could relate to in this article.
+
+In addition, the topic de jour is the safety of AI agents, which are increasingly being used in computational labs and are presenting us with lots of concerns about unintended exfiltration of data, disclosure of confidential information, and local damage due to a poorly prompted agent. Something needs to be said about this.
+
+I recorded my thoughts as I read through the article. Here is a mixture of major and minor comments.
+
+Introduction:
+
+1.The statement that the US government attacked its own research groups is a subjective interpretation of events. It would be more accurate to say that many research groups lost funding due to the actions of US funding agencies.
+2. The statement that "planning for disasters is one of the most effective ways to prevent them" is not what the author means to say. Planning for disasters like wildfires, service interruptions and loss of funding will not prevent the disasters, but may mitigate their impacts.
+3. I don't understand the assertion that the reader is doing everything themselves on top of their regular job. If the target audience is a small research software group, then disaster planning IS part of their job. Indeed, much of the planning and disaster response tips are drawing on skills needed by a system administrator. Maybe the right tip is to hire someone into that role or to train one of the lab's personnel
+3. I don't understand the last sentence of the intro. What is meant by "done" in this context?
+
+Who You are:
+1. Providing a service. It seems odd to call out Shiny and Streamlit specifically. There are many common frameworks for interactive web sites. Maybe just describe the services as interactive web sites or web-based applications?
+2. Publishing a software package. One doesn't have to release a software to a public registry in order to be vulnerable. The most common disaster scenario is when a released package needs to be updated (example, stops working because of an OS update) and the person who wrote has left the lab. This happens even when the software is on an FTP site or in GitHub.
+3. Managing data. The way this is written implies that the data has to be deposited in a repository in order to be vulnerable, but the first two scenarios are for data served locally. In addition, the second scenario of a field laptop being stolen is a lab disaster even if the data is not being shared with other groups.
+
+Tip 1: Know your risks
+1. The author refers to "our ecology lab" but there is only one author. Who is the "our?"
+2. What is meant by "work stops dead?" This is ambiguous Whose work? The labs? The collaborators'? The host institution's? Consider using a condition that is easier to apply, such as "How long can you tolerate the loss?"
+3. Important to emphasize that this is an ongoing assessment, not a one-off.
+
+Tip 2: Make a plan
+1. Why 30 seconds to find the plan? It seems
+2. The injunction to store the plan in two places that can't fail simultaneously uses an example that will fail if both the lab server and the "desk drawer" are in an office and there is a fire or earthquake. This can be fixed by adding the qualifier that the desk drawer in question is in team members' homes, and not solely in the office/lab.
+3. Why is Signal being called out here? Do enough research groups use Signal for this to be relatable? Is the Signal group in question the members of the laboratory or some other group, such as Research Support or the cloud provider.
+4. The reference to "bus factor" may not be recognizable to readers. (I first heard of it as "being run over by a bus", but I guess the idiom has evolved?)
+
+Tip 3: Back up everything
+1. The author refers to "our ecology lab." Is this a specific ecology lab that the author is part of? In that case why are there several alternative backup configurations rather than a description of the specific backup configuration the author's lab uses? If the ecology lab is notional, then it should be made clear in the intro that the ecology lab is a running example.
+2. There's no role for local backups, database systems that make local snapshots, or NAS servers that have filesystems that support snapshots?
+3. The offsite deposit advice is geared towards publishing and dataset sharing and doesn't belong with backups.
+4. Does anyone really mirror their source code between GitHub and GitLab? What is meant by a "secondary remote?"
+5. Why is the "small research software group" messing around with raw DNS records? This is definitely Research IT's responsibility. However, if the research group is relying on an external DNS management service, then maybe there should be some advice at how to achieve redundancy, as loss of DNS services *is* one of the common failure modes.
+6. Among the things that I would strongly recommend myself is to describe pipelines using a workflow description language and register the pipeline with DockStore or similar. This ensures that the pipeline will actually run when you need it.
+
+Tip 4: Decide how to stay in touch
+1. Why is Signal being highlighted here?
+2. And let's get real... small research groups rarely support a community that is going to be up in arms if the server fails at 2 am. I find it hard to relate to the tone of urgency in this section. The whole article sounds like it is being targeted to a large software development group.
+
+Tip 5: Test the plan.
+1. It is implied, but not stated, that when having the new team member execute the recoveryplan, someone else has to break the service. Having the team member break the service (as written) is not realistic.
+
+Tip 6: Watch for trouble
+1. A very small number of research groups run something so critical that a 3 am outage would get the team out of bed. The exception might be an active hacking attempt, but uptime monitoring won't help with that.
+2. Explain why a registry listing that used to work might stop working.
+3. My biggest worry is DDoS attacks and misbehaving bots. I suggest mentioning that web-based services should be monitored for up status, load status and response time.
+
+Tip 7: Secure your accounts
+1. I'd appreciate more explanation of how you can share credentials via the password managers that are mentioned. I did not realize that passwords could be synced across multiple individuals' managers. Isn't it also a security risk to share credentials?
+2. Clarify that "domain" is a "DNS domain".
+3. There's advice about including contact information in the disaster plan. This advice belongs in the disaster plan tip, not here.
+
+Tip 8: Protect your assets
+1. What is the basis for the advice that the data storage plan fit on a single page with 11-point font?
+2. Some of the advice in this section is not about protecting assets, but complying with legal and ethical obligations. Likely belongs somewhere else.
+3. I think where the author says keep laptops and servers "patched" he means "the software and operating systems" on those machines.
+4. The advice to unplug a compromised machine from the network only works when the machine is physically accessible. These days, most servers are in a rack somewhere only accessible by IT staff, or on the cloud. Can this advice be made more practicable?
+5. Speaking of which, shouldn't there be some discussion of physical security? If the critical lab server is in a space that's accessible by many people, then it's vulnerable.
+
+Tips 9-12
+1. These sections seem good.
+
+Reviewer #3: This is a very timely and important article, giving a great overview and tips on how to handle technical (and by extension to some extent also organisational) incidents that can affect small pieces of software- and data-based scientific infrastructure, provided by relatively small groups of scientists and engineers that are not professional, enterprise-level system administrators (Although I know stories of people becoming ones after growing experience with these aspects.)
+
+In general, I very much appreciate the manuscript, and find it near-ready to be published, with a few minor comments:
+
+
+The 2nd paragraph is a bit clumsy and would benefit from a revision.
+
+
+"This paper is a short guide to disaster planning and recovery for a small research
+software team. The tips assume you are doing everything yourself on top of your
+regular job, and that you aren’t an experienced system administrator."
+
+'team' vs. 'yourself'/'you aren't' vs. 'on top of regular job': You are the research software team, or a group that has a service on top (or rather as a fundament!) of other tasks, so I reckon that is the regular job.
+
+
+"This paper tells you what “done”
+looks like; they can often provide it."
+
+A rather clumsy sentence.
+
+
+
+
+
+
+Tip 1
+
+
+In cases of software, the inventory is IMHO what a "software management plan" should contain. In cases of data sets, a "data management plan". Perhaps both in case of data services. I'd suggest mentioning these, unless you as the author have a strong reason not to (DMPs being scary and unpopular wouldn't count as an argument).
+
+
+"For a small team, this will take about an hour the first time through,
+and 15-30 minutes per quarter for review."
+
+This may be enough in simple cases, but not in more complex ones. Irrespectively of the size of the team. Perhaps rather something like "For a simple service..." and that it'll have to be more for more complex scenarios.
+
+
+"A Google Doc or a text file in a shared drive or Git repository is the right tool for
+creating this, but as discussed below, make sure you keep a copy somewhere you can
+access when online services are down."
+
+I really appreciate this message, it is very important and often forgotten. For example, right now I'm locked out of my Google account because my phone broke, and soon I might be locked out of the whole set of university IT services that rely on Microsoft Office login with 2FA.
+
+"research support": I'd very much say this should be IT support, not research support.
+
+
+
+
+
+Questions for Support
+
+I very much appreciate these for each tip. I'd like to note that perhaps especially for scenarios like these (scientists offering public services), universities in our country do not anymore want to provide any infrastructure or support (both for security and QoS concerns). Luckily, there is a national infrastructure for scientific services, so "support" would mean support therein. So worth a note somewhere in the beginning, that these may not be (only) the university IT support teams.
+
+
+
+
+Tip 2
+
+I like this very much!
+
+"Who is our first point of contact on your team when we declare a disaster?"
+
+Perhaps not "who" because that will keep changing. Rather something like "What is the way ... (and, ... taken into account the option that all internal IT services are down or we are locked out ...) ?"
+
+
+
+Tip 3
+
+"For lab notebooks, scan or photograph key
+pages quarterly and save them with your other backups."
+
+Should perhaps not be part of the point 3, but a separate paragraph?
+
+
+"Back up your source code to at least two different software forges (e.g., GitLab15 as
+well as GitHub) and turn on automatic mirroring."
+
+Absolutely! Unfortunately I can say for my circles that we almost never do that. But at least we're becoming more aware and plan to change that. Are there any tutorials on how to set up good mirroring? Here in Europe, it would most preferrably be between GitHub(/GitLab) and Codeberg.
+
+
+"Back up your configuration as well..."
+
+And server configs! E.g. Apache httpd etc.
+The question we've had for years, without an answer so far, is what of the config should stay private (also from hacks and bots). Any good ideas or further reading in this respect?
+
+
+"Finally, test a full restore..."
+
+Absolutely! And having a restore procedure in the first place (at least semi-automated and well documented). Is this basically the numbered Tip 5, or is Tip 3 rather Backup & restore? Because a backup without a way to restore is easy, and useless.
+
+
+
+
+Tip 4
+
+"Keep a printed (or phone-screenshot) contact list with every team member’s mobile
+number and a personal email address. Do not store this only in a shared drive that
+may be affected by an outage."
+
+This might need more thought with respect to privacy. People are increasingly unwilling to share private contacts, for various good reasons. Maybe not everyone needs to (or should) share, but a couple of key persons will have to. Phone is in these cases uncomparably more reliable than email (useless) or Signal (easy lockout), but at the same time most problematic wrt privacy. However, a phone-less second option is needed.
+
+
+"password manager shared vault" is a good idea (again one we don't use as much as we should), but will it work in the increasingly gloomy time of "2FA everywhere"?
+
+
+"Designate one person as the communicator..."
+
+I really appreciate this whole paragraph!
+
+
+
+
+Tip 7
+
+You could have felt from my previous comments that I'm a sceptic when it comes to the current proliferation of MFA. It's great when done right, and absolutely required in some cases, but more often it's done wrong, either on the user side, the provider side, or both, centralising the points of failure rather than distributing them, thus going against most of the points of your article. Password managers also centralise the points of failure, unless you use multiple. Managing access and recovery of shared credentials in case of MFAs blows up the effort and the possibilities of compromise exponentially; something worth a thorough assessment. What I'm trying to raise, is that following your Tip 7 blindly and without good backup solutions, may compromise the resilience, and possibly the security, too, while at the same time creating a fake feeling of "doing things right".
+
+On the margin: For the case of Google accounts, with somewhat poor MFA & privacy options, we created an idea today that important private GDocs and GDrive folders could perhaps be shared between one's 2 separate Google accounts, in case those 2 could have separate points of failure of 2FA (which I'm not sure is easy to achieve without major privacy compromises).
+
+
+"Finally, maintain an offboarding checklist."
++100! And onboarding too, please. That's where some workplaces keep failing badly.
+
+
+
+Tip 8
+
+"enable automatic updates for operating systems, browsers, and any server-side software"
+There are numerous professionals who have been claiming the opposite, with some relevant arguments, so I reckon this is a rather complex and perhaps even sensitive issue. Security patches are one thing, but there many aspects that get updated, and having these fully automatic, without validation, human review, and rollback option, is calling for trouble you don't need.
+
+“patient data is never copied to a personal laptop"
+This is too serious to be left as a policy on a sheet of paper, it really needs to be enforced technically. "Trusted research environments" should be the solutions for working with protected data.
+
+
+
+
+Tip 9
+
+"Finally, conduct a short review within 48 hours of any incident. The goal is to identify what in the system allowed the incident to happen, not who made a mistake."
+Highly appreciated!
+
+
+
+Tips 11 & 12
+
+Very important and nicely written!
+
+
+
+
+Summary: Many thanks for writing this manuscript; I hope it will be published soon!
