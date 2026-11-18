@@ -1,0 +1,229 @@
+Response to reviewers
+
+Reviewer #1
+
+- "My main concern is the scope of the manuscript and the
+  actionability of several tips for its stated audience." I have added
+  clarifying notes in several places to distinguish what small teams
+  can reasonably be expected to do from what they should ask IT to do
+  (if available).
+
+- "Tips 11 and 12 broaden the manuscript from technical disaster prep
+  into leadership." I have rewritten the first paragraph of Tip 11 to
+  make the shift of focus explicit. (I believe very strongly that the
+  human aspects of disaster management are as important as the IT
+  aspects, and so have opted to retain these tips.)
+
+- "On the 'Questions for Support': what to do in case there is no such
+  support available on site?" Addressed with several comments.
+
+- "Please consider adding web links into in the running text rather
+  than having both footnotes and numbered references in case the
+  journal allows this." I am using PLOs's own style file here.
+
+- "CRAN is a mirrored network, so there is no single failure point
+  once a package is published." Noted, and comment added.
+
+- "Data repositories do not primarily serve as platform for data
+  backup, but for data publishing, hence the DOI." Thank you for
+  pointing this out - I've added a clarifying note.
+
+- "The note field in Tip 3 seems redundant if the 3-2-1 rule is
+  adhered to."  Agreed and addressed.
+
+- "Tip 6 seems to be a rule to monitor tip 1." I've added a backward
+  reference from the former to the latter.
+
+- "In case offboarding is suggested, I think mentioning onboarding is
+  similarly critical." Agreed - I've added a couple of sentences.
+
+- "Please consider refining Tip 8. This rule is not actionable at all
+  for readers subordinate to local IT support." Clarifying note added.
+
+- "If a research software team is small with few members and just
+  produces analysis code and some packages, the 12 tips seem
+  disproportionate. Please consider adding a small acknowledgement of
+  this." With respect, I disagree with the reviewer on this point.
+
+Reviewer #2
+
+- "It feels targeted at a large research software development group
+  rather than a typical computational lab." I have added a paragraph
+  in "Who You Are" covering the small-lab case (an RSE plus a changing
+  cast of students), emphasizing a written record of work, documenting
+  where assets live, and a handover checklist, and I have softened the
+  large-group urgency in Tip 4.
+
+- "The topic de jour is the safety of AI agents." I have added a
+  paragraph in Tip 8 on AI-agent risks (unintended data exfiltration,
+  disclosure of confidential information, and local damage from a
+  poorly prompted agent). I wish I knew enough to write more, or that
+  people were being more deliberate in their adoption of AI tools so
+  as not to get ahead of our understanding of the risks...
+
+- "The statement that the US government attacked its own research
+  groups is a subjective interpretation of events." Rephrased: "In
+  2025, the US government initiated an unprecedented series of cuts to
+  its own scientific research groups."
+
+- "Planning for disasters ... will not prevent the disasters, but may
+  mitigate their impacts." Changed "prevent them" to "mitigate their
+  impacts."
+
+- "I don't understand the assertion that the reader is doing
+  everything themselves on top of their regular job." Reframed to note
+  that disaster planning is done on top of "normal" work.
+
+- "What is meant by 'done' in this context?" Removed.
+
+- "It seems odd to call out Shiny and Streamlit specifically."
+  Generalized to "an interactive web site or web-based application."
+
+- "One doesn't have to release software to a public registry in order
+  to be vulnerable." Broadened the profile beyond public registries
+  and added the "released package stops working after an OS update and
+  its author has left" scenario.
+
+- "This implies that the data has to be deposited in a repository in
+  order to be vulnerable." Reworded to "whether or not they are shared
+  with collaborators or deposited in repositories."
+
+- "'Our ecology lab' but there is only one author." Changed to "an
+  ecology lab" (a notional running example) throughout.
+
+- "What is meant by 'work stops dead'?" Changed to "How long can you
+  tolerate being without it before your work is seriously disrupted?"
+
+- "Emphasize that this is an ongoing assessment, not a one-off." Added
+  a sentence saying so.
+
+- "Why 30 seconds to find the plan?" Softened to "find quickly."
+
+- "The example will fail if both ... are in an office and there is a
+  fire or earthquake." Added "at home" to the desk-drawer example.
+
+- "The reference to 'bus factor' may not be recognizable."  Phrased as
+  "lottery-factor (also called a 'bus factor' problem)".
+
+- "There's no role for local backups ... NAS servers that support
+  snapshots?"  Added local database snapshots and NAS filesystem
+  snapshots.
+
+- "The offsite deposit advice ... doesn't belong with backups."
+  Distinguished as "Publishing is a related but distinct step".
+
+- "Does anyone really mirror ... what is a 'secondary remote'?"
+  Clarified "secondary remote" and added Codeberg as an example.
+
+- "Why is the small research group messing around with raw DNS
+  records?" Removed specific mention of DNS.
+
+- "Describe pipelines using a workflow description language and
+  register the pipeline with DockStore." Added.
+
+- "Why is Signal being called out here?" Reframed Signal as an example
+  of an out-of-band channel.
+
+- "Small research groups rarely support a community ... up in arms at
+  2 am."  Collaboration across timezones means that happens more than
+  it used to :-) Softened the contact-tree framing.
+
+- "Someone else has to break the service." Clarified that someone else
+  breaks a test copy and the newest member executes the recovery.
+
+- "Very few groups run something so critical that a 3 am outage
+  ... uptime monitoring won't help with an active hacking attempt."
+  Expanded the explanation of active hacking.
+
+- "Explain why a registry listing that used to work might stop
+  working." Added examples (token expired, account suspended, package
+  removed or deprecated).
+
+- "Web-based services should be monitored for up status, load status
+  and response time." Added.
+
+- "Explain how you can share credentials via the password managers
+  ... isn't it also a security risk?" Added an explanation of shared
+  vaults and the exposure trade-off.
+
+- "Clarify that 'domain' is a 'DNS domain'." Changed to "custom web
+  domain" as part of removing specific mention of DNS.
+
+- "Advice about including contact information ... belongs in the
+  disaster plan tip." Moved to Tip 2.
+
+- "What is the basis for ... a single page with 11-point font?"
+  Replaced with "keep the policy short enough that people will
+  actually read and remember it."
+
+- "Some of the advice ... is about complying with legal and ethical
+  obligations." Added a note at the top of Tip 8.
+
+- "Unplug ... only works when the machine is physically accessible."
+  Added cloud-console and rack alternatives.
+
+- "Shouldn't there be some discussion of physical security?" Added a
+  brief mention, but I didn't want to expand the scope of the paper
+  even further.
+
+- Tips 9-12: "These sections seem good." Thank you.
+
+Reviewer #3
+
+- "The 2nd paragraph is a bit clumsy." Reframed (see Reviewer #2,
+  Introduction).
+
+- "'This paper tells you what done looks like' ... a rather clumsy
+  sentence."  Removed.
+
+- "The inventory is what a software management plan / data management
+  plan should contain." Added a parenthetical naming them.
+
+- "This may be enough in simple cases, but not in more complex ones."
+  Changed "For a small team" to "For a simple service" and noted
+  complex cases take longer.
+
+- "'Research support' ... should be IT support." Changed.
+
+- "These may not be (only) the university IT support teams." Added a
+  note that support may come from national infrastructure.
+
+- "'Who' ... will keep changing." Changed to "What is the way to reach
+  your team ... including when internal IT is down or we are locked
+  out."
+
+- "Lab notebooks ... should perhaps be a separate paragraph." Moved to
+  its own paragraph.
+
+- "Any tutorials on how to set up good mirroring? ... Codeberg." Added
+  Codeberg as an example.
+
+- "And server configs!" Added server configuration to the
+  config-backup list.
+
+- "Is this basically Tip 5, or is Tip 3 rather Backup & restore?"
+  Clarified the Tip 3 / Tip 5 split.
+
+- "People are increasingly unwilling to share private contacts."
+  Reframed the contact list to include only the few key people and a
+  phone-less fallback.
+
+- "Will the password manager shared vault work ... in the time of '2FA
+  everywhere'?" Addressed in Tip 7's caveat (below).
+
+- "MFA and password managers centralize the points of failure." Added
+  a caveat to Tip 7.
+
+- "And onboarding too." Added an onboarding checklist alongside the
+  offboarding one.
+
+- "Automatic updates ... rather complex and perhaps even sensitive."
+  Added nuance about applying security patches promptly while
+  reviewing and rolling back broader updates.
+
+- "'Patient data is never copied to a personal laptop' ... needs to be
+  enforced technically." Added a note about trusted research
+  environments.
+
+- Tips 9 and 11-12: "Highly appreciated" / "Very important and nicely
+  written."  Thank you.
